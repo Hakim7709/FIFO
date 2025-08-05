@@ -468,11 +468,13 @@
                             }
                         };
                         
-                        doc.setFontSize(18);
+                        doc.setFontSize(20);
+                        doc.setFont(undefined, 'bold');
                         doc.text("KJ04 Hudaithi Mall", 15, 20);
-                        doc.setFontSize(12);
+                        doc.setFontSize(14);
                         doc.text(`Albaik ${reportType === 'inventory' ? 'Inventory' : 'Store Balance'} Report`, 15, 28);
-                        doc.setFontSize(10);
+                        doc.setFontSize(12);
+                        doc.setFont(undefined, 'normal');
                         doc.text(`Exported on: ${headerDate}`, 15, 34);
                         
                         if (reportType === 'inventory') {
@@ -494,26 +496,30 @@
                                 const masterList = productsByCategory[category].filter(p => p !== 'Other');
                                 const inventoryProducts = sortedProducts.filter(p => p.category === category);
                                 const availableProductNames = new Set(inventoryProducts.map(p => p.productName));
-                                const cutOffProducts = masterList
-                                    .filter(name => !availableProductNames.has(name))
-                                    .map(name => ({
-                                        productName: name,
-                                        isCutOff: true,
-                                    }));
+                                
+                                let cutOffProducts = [];
+                                if (category !== 'Frozen') {
+                                    cutOffProducts = masterList
+                                        .filter(name => !availableProductNames.has(name))
+                                        .map(name => ({
+                                            productName: name,
+                                            isCutOff: true,
+                                        }));
+                                }
                                 
                                 const allCategoryProducts = [...inventoryProducts, ...cutOffProducts];
 
                                 if (allCategoryProducts.length > 0) {
-                                    doc.setFontSize(14);
+                                    doc.setFontSize(16);
                                     doc.setFont(undefined, 'bold');
                                     doc.text(category.toUpperCase(), pageWidth / 2, startY, { align: 'center' });
-                                    startY += 8;
+                                    startY += 10;
 
                                     const tableRows = allCategoryProducts.map(p => {
                                         if (p.isCutOff) {
                                             return [p.productName, '', '', '', '', 'Cut Off', '', ''];
                                         }
-                                        const remainingDays = calculateRemainingDays((p.category === 'Frozen' || p.category === 'Drinks') ? p.expireDate : p.albaikExpire);
+                                        const remainingDays = calculateRemainingDays(p.category === 'Frozen' ? p.expireDate : p.albaikExpire);
                                         const productNameWithBatch = `${p.productName} ${usageOrderMap.get(p.id) ? `(${usageOrderMap.get(p.id)})` : ''}`;
                                         return [
                                             productNameWithBatch, p.batchNumber || 'N/A', formatDate(p.productionDate),
@@ -526,7 +532,7 @@
                                         head: [tableColumn],
                                         body: tableRows,
                                         startY: startY,
-                                        styles: { fontSize: 8 },
+                                        styles: { fontSize: 9, fontStyle: 'bold' },
                                         headStyles: { fillColor: [220, 39, 39] },
                                         didDrawPage: addWatermark,
                                         didParseCell: function (data) {
@@ -534,7 +540,6 @@
                                                 const daysLeft = data.row.raw[7];
                                                 if (data.row.raw[5] === 'Cut Off') {
                                                     data.cell.styles.textColor = '#9c0006';
-                                                    data.cell.styles.fontStyle = 'bold';
                                                 }
                                                 if (typeof daysLeft === 'number') {
                                                     if (daysLeft <= 0) {
@@ -548,7 +553,7 @@
                                             }
                                         }
                                     });
-                                    startY = doc.autoTable.previous.finalY + 10;
+                                    startY = doc.autoTable.previous.finalY + 15;
                                 }
                             });
 
@@ -559,7 +564,7 @@
                                 head: [tableColumn], 
                                 body: tableRows, 
                                 startY: 50, 
-                                styles: { fontSize: 10 }, 
+                                styles: { fontSize: 12, fontStyle: 'bold' }, 
                                 headStyles: { fillColor: [220, 39, 39] },
                                 didDrawPage: addWatermark,
                                 didParseCell: function (data) {
@@ -594,7 +599,7 @@
                         'Albaik Shelf Life': formatDate(p.albaikExpire),
                         'Qty (Ctn)': p.quantityCarton || 0,
                         'Qty (Pcs)': p.quantityPiece || 0,
-                        'Days Left': calculateRemainingDays((p.category === 'Frozen' || p.category === 'Drinks') ? p.expireDate : p.albaikExpire) ?? 'N/A'
+                        'Days Left': calculateRemainingDays(p.category === 'Frozen' ? p.expireDate : p.albaikExpire) ?? 'N/A'
                     }));
                     const ws = XLSX.utils.json_to_sheet(data);
                     
