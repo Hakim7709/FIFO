@@ -65,6 +65,15 @@
             margin-bottom: 1rem;
             line-height: 1.6;
         }
+        /* Style for the main header to ensure text is always readable */
+        main > header {
+            background-color: rgba(248, 250, 252, 0.85); /* Slightly transparent version of bg-slate-50 */
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px); /* Safari support */
+            border-radius: 1.5rem; /* 24px */
+            padding-top: 0.5rem;
+            padding-bottom: 1rem;
+        }
     </style>
 </head>
 <body class="bg-slate-50">
@@ -168,64 +177,26 @@
 
         // --- Data ---
         const productCategories = ['Sauces', 'Drinks', 'Juices', 'Frozen', 'Chiller'];
+        
+        const frozenSubCategories = {
+            'CHICKEN ITEMS': ['Nuggets Regular', 'Nuggets Spicy', 'Nugget Super Regu..', 'Nuggets Super Spicy', 'Burger Regular', 'Burger Spicy', 'Shawarma Regular', 'Shawarma Spicy', 'Chicken Finger', 'Big Baik Regular', 'Big Baik Spicy', 'Saj Regular', 'Saj Spicy', 'Chest Regular', 'Chest Spicy', 'Drumstick', 'Thigh'],
+            'FISH ITEMS': ['Fish Nuggets Regular', 'Fish Nuggets Spicy', 'Fish Super Regular', 'Fish Super Spicy', 'Fish Burger', 'Value Regular', 'Value TL', 'Value Spicy', 'Jambo', 'Shrimp Sand..Regu', 'Shrimp Sand..Spicy'],
+            'FALAFEL': ['FL Nuggets Regular', 'FL Nuggets Spicy', 'FL Super Regular', 'Falafel Super Spicy'],
+            'SIDE': ['Hommus', 'Egg', 'Corn Cup', 'Corn Stick', 'Chips', 'Butter']
+        };
+
+        const saucesSubCategories = {
+            'Small Sauces': ["Garlic Small", "Nugget Small", "Cocktail Small", "Tahina Small", "Tartar Small"],
+            'Big Sauces': ["Garlic Large", "Nugget Large", "Cocktail Large", "Tahina Large", "Tartar Large"],
+            'Super Sauces': ["Garlic Super", "Burger Super Regular", "Burger Super Spicy", "Tahina Super", "Fish Super", "Tartar Super"],
+            'Pickels': ["Pickle Regular", "Pickle Spicy", "Sweet Pickle", "Diced Pickle"]
+        };
+
         const productsByCategory = {
-            'Sauces': ["Garlic Small", "Garlic Large", "Nugget Small", "Nugget Large", "Cocktail Small", "Cocktail Large", "Tahina Small", "TAHINA Large", "Garlic Super", "Burger Super Regular", "Burger Super Spicy", "Tahina Super", "Fish Super", "Pickle Regular", "Pickle Spicy", "Sweet Pickle", "Diced Pickle", "Tartar Small", "Tartar Large", "Tartar Super", "Other"],
+            'Sauces': ["Garlic Small", "Garlic Large", "Nugget Small", "Nugget Large", "Cocktail Small", "Cocktail Large", "Tahina Small", "Tahina Large", "Garlic Super", "Burger Super Regular", "Burger Super Spicy", "Tahina Super", "Fish Super", "Pickle Regular", "Pickle Spicy", "Sweet Pickle", "Diced Pickle", "Tartar Small", "Tartar Large", "Tartar Super", "Other"],
             'Drinks': ['Pepsi', 'Mirinda Citrus', 'Mirinda Orange', '7 Up', 'Shani', 'Pepsi Diet', '7 Up Diet', 'Lipton Peach', 'Lipton Lemon', 'Water', 'Other'],
             'Juices': ['Mango', 'Apple', 'Orange', 'Mix Fruits', 'Large Mango', 'Large Apple', 'Large Orange', 'Large Mix Fruits', 'Other'],
-            'Frozen': [
-                'ALBAIK CHICKEN BREADED',
-                'ALBAIK CHICKEN SPICY BREADED',
-                'ALBAIK CHICKEN MARINATED',
-                'ALBAIK CHICKEN SPICY MARINATED',
-                'ALBAIK CHICKEN FILLET NUGGETS',
-                'ALBAIK CHICKEN FILLET NUGGETS SPICY',
-                'ALBAIK CHICKEN FILLET SUPER',
-                'ALBAIK CHICKEN FILLET SUPER SPICY',
-                'ALBAIK CHICKEN FINGER',
-                'ALBAIK CHICKEN FILLET NUGGETS HAJJ',
-                'ALBAIK CHICKEN FILLET BURGER',
-                'ALBAIK CHICKEN FILLET BURGER SPICY',
-                'ALBAIK CHICKEN FILLET SUPER XT',
-                'ALBAIK CHICKEN FILLET SUPER SPICY XT',
-                'ALBAIK FISH FILLET NUGGETS',
-                'ALBAIK FISH FILLET SUPER',
-                'ALBAIK FISH FILLET NUGGETS SPICY',
-                'ALBAIK FISH FILLET SUPER SPICY',
-                'ALBAIK SHRIMPS JUMBO',
-                'ALBAIK SHRIMPS VALUE',
-                'ALBAIK SANDWICH SHRIMPS',
-                'ALBAIK HOMMOS DIP PORTION',
-                'ALBAIK GARLIC SMALL PORTION',
-                'ALBAIK GARLIC LARGE PORTION',
-                'ALBAIK COCKTAIL SMALL PORTION',
-                'ALBAIK COCKTAIL LARGE PORTION',
-                'ALBAIK NUGGETS SAUCE PORTION',
-                'ALBAIK GARLIC SUPER SAUCE',
-                'ALBAIK SHRIMPS / CFB SUPER SAUCE',
-                'ALBAIK LIGHT TARTAR SAUCE',
-                'ALBAIK FISH SUPER SAUCE',
-                'ALBAIK HOMMOS DIP BULK',
-                'ALBAIK COLESLAW SAUCE',
-                'ALBAIK CFB SPICY SUPER SAUCE',
-                'ALBAIK COLESLAW PORTION',
-                'ALBAIK COLESLAW VEGETABLES SANDWICH',
-                'ALBAIK COLESLAW VEGETABLES BULK',
-                'ALBAIK PICKLES CUCUMBER',
-                'ALBAIK PICKLES CUCUMBER SPICY',
-                'ALBAIK PICKLES CUCUMBER SWEET',
-                'ALBAIK GCF SAUCE',
-                'ALBAIK FROZEN CHICKEN FILLET',
-                'ALBAIK MARINATED CHICKEN STRIPS SPICY',
-                'ALBAIK Falafel Nuggets',
-                'ALBAIK Falafel Super Fillet',
-                'ALBAIK Marinated Chicken Strips',
-                'ALBAIK FROZEN CHCKEN MARINATED REGULAR',
-                'ALBAIK FROZEN CHICKEN MARINATED SPICY',
-                'ALBAIK Boneless Thighs Breaded',
-                'ALBAIK Boneless Drumsticks Breaded',
-                'ALBAIK Chicken Strips Breaded',
-                'Other'
-            ],
+            'Frozen': [...frozenSubCategories['CHICKEN ITEMS'], ...frozenSubCategories['FISH ITEMS'], ...frozenSubCategories['FALAFEL'], ...frozenSubCategories['SIDE'], 'Other'],
             'Chiller': ['Yogurt', 'Cheese', 'Milk', 'Other']
         };
         const allProductNames = Object.values(productsByCategory).flat();
@@ -340,48 +311,71 @@
             }, [products, selectedProducts, statusFilter]);
         
             const inventoryReportText = useMemo(() => {
-                let report = `📅 Inventory Summary – ${headerDate}\n\n`;
+                let report = `🏛KJ04 HUDAITHI MALL🏛\n🍔AL BAIK RESTAURANT 🍔\n🎲DAILY INVENTORY SUMMARY 🎲\n📝📝DATE : ${headerDate} 📝📝\n\n`;
                 
-                let productsToReport;
-                if (batchFilter === 'first') {
-                    const firstBatches = new Map();
-                    sortedProducts.forEach(p => {
-                        if (!firstBatches.has(p.productName)) {
-                            firstBatches.set(p.productName, p);
+                const activeCategories = new Set(sortedProducts.map(p => p.category));
+                if (activeCategories.size === 0) return "No products to report.";
+
+                const formatCategorySection = (categoryName, emoji, products, subCategories) => {
+                    let section = '';
+                    const productsInCategory = products.filter(p => p.category === categoryName);
+                    if (productsInCategory.length === 0) return '';
+                    
+                    section += `${emoji.repeat(26)}\n    ${emoji}${emoji} ${categoryName.toUpperCase()} ${emoji}${emoji}\n`;
+
+                    const productsByName = productsInCategory.reduce((acc, p) => {
+                        if (!acc[p.productName]) acc[p.productName] = [];
+                        acc[p.productName].push(p);
+                        return acc;
+                    }, {});
+
+                    const processSubCategory = (subCategoryName, productNames) => {
+                        let subSection = '';
+                        if (subCategoryName) {
+                            subSection += `\n--- ${subCategoryName.toUpperCase()} ---\n`;
                         }
-                    });
-                    productsToReport = Array.from(firstBatches.values());
-                } else {
-                    productsToReport = sortedProducts;
-                }
-        
-                if (productsToReport.length === 0) return "No products match the selected filters.";
-        
-                const reportGroupsByCategory = productsToReport.reduce((acc, p) => {
-                    if (!acc[p.category]) acc[p.category] = [];
-                    acc[p.category].push(p);
-                    return acc;
-                }, {});
-        
-                productCategories.forEach(category => {
-                    const productsInCategory = reportGroupsByCategory[category];
-                    if (productsInCategory && productsInCategory.length > 0) {
-                        report += `--- ${category.toUpperCase()} ---\n\n`;
-                        productsInCategory.forEach(p => {
-                            const rem = calculateRemainingDays((p.category === 'Frozen' || p.category === 'Drinks') ? p.expireDate : p.albaikExpire);
-                            const batchLabel = usageOrderMap.get(p.id) ? ` (${usageOrderMap.get(p.id)})` : '';
-                            const alertEmoji = (rem !== null && rem < 8) ? ' 🚨' : '';
-                            report += `📦 ${p.productName}${batchLabel}\n`;
-                            if (p.productionDate) report += `🛠️ Production Date: ${formatDate(p.productionDate)}\n`;
-                            report += `🗓️ Expire Date: ${formatDate(p.expireDate)}\n`;
-                            if (p.albaikExpire) report += `⏳ Albaik Shelf Life: ${formatDate(p.albaikExpire)}\n`;
-                            report += `🔢 Quantity: ${p.quantityCarton || 0} Ctn, ${p.quantityPiece || 0} Pcs\n`;
-                            report += `🕒 Remaining: ${rem === null ? 'N/A' : `${rem} days`}${alertEmoji}\n\n`;
+                        productNames.forEach(name => {
+                            if (productsByName[name]) {
+                                subSection += `\n🌯 ${name.toUpperCase()} 🌯\n`;
+                                productsByName[name].forEach(item => {
+                                    const rem = calculateRemainingDays(item.category === 'Frozen' ? item.expireDate : item.albaikExpire);
+                                    if (item.category === 'Sauces' || item.category === 'Drinks') {
+                                        subSection += `Production Date: ${formatDate(item.productionDate)}\n`;
+                                        subSection += `Expire Date: ${formatDate(item.expireDate)}\n`;
+                                    } else {
+                                        subSection += `P. ${formatDate(item.productionDate)}\n`;
+                                        subSection += `E. ${formatDate(item.expireDate)}\n`;
+                                    }
+                                    if(item.albaikExpire) subSection += `Albaik Shelf Life: ${formatDate(item.albaikExpire)}\n`;
+                                    subSection += `Qty. ${item.quantityCarton || 0}crt ${item.quantityPiece || 0}bag\n`;
+                                    subSection += `Remaining: ${rem === null ? 'N/A' : `${rem} days`}\n\n`;
+                                });
+                            }
                         });
+                        return subSection;
+                    };
+
+                    if (subCategories) {
+                        Object.keys(subCategories).forEach(subCat => {
+                            section += processSubCategory(subCat, subCategories[subCat]);
+                        });
+                    } else {
+                        section += processSubCategory(null, productsByCategory[categoryName]);
                     }
-                });
-                return report.trim();
-            }, [sortedProducts, batchFilter, usageOrderMap, headerDate]);
+
+                    return section;
+                };
+
+                report += formatCategorySection('Sauces', '🥫', sortedProducts, saucesSubCategories);
+                report += formatCategorySection('Drinks', '🥤', sortedProducts);
+                report += formatCategorySection('Juices', '🧃', sortedProducts);
+                report += formatCategorySection('Frozen', '🍗', sortedProducts, frozenSubCategories);
+                report += formatCategorySection('Chiller', '🧊', sortedProducts);
+                
+                report += `\n👆Thanks 👆`;
+
+                return report;
+            }, [sortedProducts, headerDate]);
         
             const storeBalanceData = useMemo(() => {
                 const inventoryTotals = products.reduce((acc, p) => {
@@ -441,153 +435,187 @@
                 window.open(`https://wa.me/?text=${encodedText}`, '_blank');
             };
         
-            const handleExportPdf = () => {
-                toDataURL('https://cdn.brandfetch.io/idwmB-wz5R/w/800/h/899/theme/dark/symbol.png?c=1bxid64Mup7aczewSAYMX&t=1745978664233', function(logoDataUrl) {
-                    try {
-                        const { jsPDF } = window.jspdf;
-                        const doc = new jsPDF({ orientation: reportType === 'inventory' ? "landscape" : "portrait" });
-                        const pageWidth = doc.internal.pageSize.getWidth();
-                        const pageHeight = doc.internal.pageSize.getHeight();
+           const handleExportPdf = () => {
+    toDataURL('https://cdn.brandfetch.io/idwmB-wz5R/w/800/h/899/theme/dark/symbol.png?c=1bxid64Mup7aczewSAYMX&t=1745978664233', function (logoDataUrl) {
+        try {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: reportType === 'inventory' ? 'landscape' : 'portrait' });
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const pageBottomMargin = 20;
 
-                        // Page 1: Logo Only
-                        const logoWidth = 80;
-                        const logoHeight = 80;
-                        const logoX = (pageWidth - logoWidth) / 2;
-                        const logoY = (pageHeight - logoHeight) / 2;
-                        doc.addImage(logoDataUrl, 'PNG', logoX, logoY, logoWidth, logoHeight);
+            // Page 1: Logo only
+            const logoWidth = 80;
+            const logoHeight = 80;
+            const logoX = (pageWidth - logoWidth) / 2;
+            const logoY = (pageHeight - logoHeight) / 2;
+            doc.addImage(logoDataUrl, 'PNG', logoX, logoY, logoWidth, logoHeight);
 
-                        // Add new page for the report
-                        doc.addPage();
-                        
-                        // Watermark function
-                        const addWatermark = (data) => {
-                            const pageCount = doc.internal.getNumberOfPages();
-                            for (let i = 1; i <= pageCount; i++) {
-                                doc.setPage(i);
-                                doc.saveGraphicsState();
-                                doc.setGState(new doc.GState({opacity: 0.1}));
-                                doc.addImage(logoDataUrl, 'PNG', logoX, logoY, logoWidth, logoHeight);
-                                doc.restoreGraphicsState();
+            doc.addPage();
+
+            const addWatermark = () => {
+                const pageCount = doc.internal.getNumberOfPages();
+                for (let i = 1; i <= pageCount; i++) {
+                    doc.setPage(i);
+                    doc.saveGraphicsState();
+                    doc.setGState(new doc.GState({ opacity: 0.02 }));
+                    doc.addImage(logoDataUrl, 'PNG', logoX, logoY, logoWidth, logoHeight);
+                    doc.restoreGraphicsState();
+                }
+            };
+
+            const drawHeader = () => {
+                doc.setTextColor(0, 0, 0); // ✅ Force black text
+                doc.setFontSize(18);
+                doc.setFont(undefined);
+                doc.text("KJ04 Hudaithi Mall", 15, 20);
+                doc.setFontSize(14);
+                doc.text(`Albaik ${reportType === 'inventory' ? 'Inventory' : 'Store Balance'} Report`, 15, 28);
+                doc.setFontSize(12);
+                doc.text(`Exported on: ${headerDate}`, 15, 34);
+
+                const createdByText = ["Generate by    ", "MD Hakim Mia"];
+                doc.text(createdByText, pageWidth - 15, 20, { align: 'right' });
+            };
+
+            if (reportType === 'inventory') {
+                drawHeader();
+                let startY = 50;
+                const minSpaceNeededForSection = 40;
+
+                const tableColumn = ["Product", "Batch", "Prod. Date", "Exp. Date", "Albaik Shelf Life", "Qty (Ctn)", "Qty (Pcs)", "Days Left"];
+                const subCategoryMaps = { Frozen: frozenSubCategories, Sauces: saucesSubCategories };
+                const activeCategories = new Set(sortedProducts.map(p => p.category));
+
+                const autoTableConfig = {
+                    styles: { 
+                        fontSize: 10, 
+                        fontStyle: 'normal', 
+                        fillColor: [255, 255, 255],
+                        textColor: [0, 0, 0] // ✅ Black text
+                    },
+                    headStyles: { 
+                        fillColor: [220, 39, 39], 
+                        fontStyle: 'bold',
+                        textColor: [255, 255, 255] // ✅ Black header text
+                    },
+                    didDrawPage: addWatermark,
+                    didParseCell: function (data) {
+                        if (data.section === 'body') {
+                            data.cell.styles.textColor = [0, 0, 0]; // ✅ Always black
+                            const daysLeft = data.row.raw[7];
+                            if (data.row.raw[5] === 'Out of Stock') {
+                                data.cell.styles.textColor = [255, 0, 0];
+                                data.cell.styles.fontStyle = 'normal';
                             }
-                        };
-                        
-                        doc.setFontSize(20);
-                        doc.setFont(undefined, 'bold');
-                        doc.text("KJ04 Hudaithi Mall", 15, 20);
-                        doc.setFontSize(14);
-                        doc.text(`Albaik ${reportType === 'inventory' ? 'Inventory' : 'Store Balance'} Report`, 15, 28);
-                        doc.setFontSize(12);
-                        doc.setFont(undefined, 'normal');
-                        doc.text(`Exported on: ${headerDate}`, 15, 34);
-                        
-                        if (reportType === 'inventory') {
-                            const createdByText = "Report Create by Md Hakim Mia";
-                            doc.text(createdByText, pageWidth - 15, 38, { align: 'right' });
-                        } else { 
-                            const createdByText = ["Generate By", "MD Hakim Mia"];
-                            doc.text(createdByText, pageWidth - 15, 20, { align: 'right' });
+                            if (typeof daysLeft === 'number') {
+                                if (daysLeft <= 3) {
+                                    data.cell.styles.fillColor = '#FF6666';
+                                } else if (daysLeft < 5) {
+                                    data.cell.styles.fillColor = '#FFFFE0';
+                                }
+                            }
                         }
-                    
-                        if (reportType === 'inventory') {
-                            const activeCategories = new Set(products.map(p => p.category));
-                            const tableColumn = ["Product", "Batch", "Prod. Date", "Exp. Date", "Albaik Shelf Life", "Qty (Ctn)", "Qty (Pcs)", "Days Left"];
-                            let startY = 50;
+                    }
+                };
 
-                            productCategories.forEach(category => {
-                                if (!activeCategories.has(category)) return;
+                productCategories.forEach(category => {
+                    if (!activeCategories.has(category)) return;
+                    if (startY + minSpaceNeededForSection > pageHeight - pageBottomMargin) {
+                        doc.addPage();
+                        startY = 20;
+                    }
 
-                                const masterList = productsByCategory[category].filter(p => p !== 'Other');
-                                const inventoryProducts = sortedProducts.filter(p => p.category === category);
-                                const availableProductNames = new Set(inventoryProducts.map(p => p.productName));
-                                
-                                let cutOffProducts = [];
-                                if (category !== 'Frozen') {
-                                    cutOffProducts = masterList
-                                        .filter(name => !availableProductNames.has(name))
-                                        .map(name => ({
-                                            productName: name,
-                                            isCutOff: true,
-                                        }));
-                                }
-                                
-                                const allCategoryProducts = [...inventoryProducts, ...cutOffProducts];
+                    doc.setFontSize(20);
+                    doc.setFont(undefined, 'bold');
+                    doc.setTextColor(0, 0, 0); // ✅ Black
+                    doc.text(category.toUpperCase(), pageWidth / 2, startY, { align: 'center' });
+                    startY += 12;
 
-                                if (allCategoryProducts.length > 0) {
-                                    doc.setFontSize(16);
-                                    doc.setFont(undefined, 'bold');
-                                    doc.text(category.toUpperCase(), pageWidth / 2, startY, { align: 'center' });
-                                    startY += 10;
+                    const subMap = subCategoryMaps[category];
+                    if (subMap) {
+                        Object.entries(subMap).forEach(([subName, productNames]) => {
+                            const inventoryProducts = sortedProducts.filter(p => p.category === category && productNames.includes(p.productName));
+                            const availableNames = new Set(inventoryProducts.map(p => p.productName));
+                            let cutOffProducts = [];
+                            if (category !== 'Frozen') {
+                                const missing = productNames.filter(n => n !== 'Other' && !availableNames.has(n));
+                                cutOffProducts = missing.map(name => ({ productName: name, isCutOff: true }));
+                            }
+                            const allGroupRows = [...inventoryProducts, ...cutOffProducts];
+                            if (allGroupRows.length === 0) return;
 
-                                    const tableRows = allCategoryProducts.map(p => {
-                                        if (p.isCutOff) {
-                                            return [p.productName, '', '', '', '', 'Cut Off', '', ''];
-                                        }
-                                        const remainingDays = calculateRemainingDays((p.category === 'Frozen' || p.category === 'Drinks') ? p.expireDate : p.albaikExpire);
-                                        const productNameWithBatch = `${p.productName} ${usageOrderMap.get(p.id) ? `(${usageOrderMap.get(p.id)})` : ''}`;
-                                        return [
-                                            productNameWithBatch, p.batchNumber || 'N/A', formatDate(p.productionDate),
-                                            formatDate(p.expireDate), formatDate(p.albaikExpire), p.quantityCarton || 0,
-                                            p.quantityPiece || 0, remainingDays ?? 'N/A'
-                                        ];
-                                    });
+                            const estimatedHeight = 16 + (allGroupRows.length > 0 ? 10 : 0);
+                            if (startY + estimatedHeight > pageHeight - pageBottomMargin) {
+                                doc.addPage();
+                                startY = 20;
+                            }
+                            
+                            doc.setFontSize(14);
+                            doc.setFont(undefined);
+                            doc.setTextColor(0, 0, 0); // ✅ Black
+                            doc.text(subName.toUpperCase(), 14, startY);
+                            startY += 4;
 
-                                    doc.autoTable({
-                                        head: [tableColumn],
-                                        body: tableRows,
-                                        startY: startY,
-                                        styles: { fontSize: 9, fontStyle: 'bold' },
-                                        headStyles: { fillColor: [220, 39, 39] },
-                                        didDrawPage: addWatermark,
-                                        didParseCell: function (data) {
-                                            if (data.section === 'body') {
-                                                const daysLeft = data.row.raw[7];
-                                                if (data.row.raw[5] === 'Cut Off') {
-                                                    data.cell.styles.textColor = '#9c0006';
-                                                }
-                                                if (typeof daysLeft === 'number') {
-                                                    if (daysLeft <= 0) {
-                                                        data.cell.styles.fillColor = '#ffc7ce';
-                                                        data.cell.styles.textColor = '#9c0006';
-                                                    } else if (daysLeft < 8) {
-                                                        data.cell.styles.fillColor = '#ffeb9c';
-                                                        data.cell.styles.textColor = '#9c6500';
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    });
-                                    startY = doc.autoTable.previous.finalY + 15;
-                                }
+                            const tableRows = allGroupRows.map(p => {
+                                if (p.isCutOff) return [p.productName, '', '', '', '', 'Out of Stock', '', ''];
+                                const remainingDays = calculateRemainingDays(p.category === 'Frozen' ? p.expireDate : p.albaikExpire);
+                                const productNameWithBatch = `${p.productName} ${usageOrderMap.get(p.id) ? `(${usageOrderMap.get(p.id)})` : ''}`;
+                                return [productNameWithBatch, p.batchNumber || 'N/A', formatDate(p.productionDate), formatDate(p.expireDate), formatDate(p.albaikExpire), p.quantityCarton || 0, p.quantityPiece || 0, remainingDays ?? 'N/A'];
                             });
 
-                        } else {
-                            const tableColumn = ["Product Name", "Category", "Total Cartons", "Total Pieces", "Status"];
-                            const tableRows = storeBalanceData.map(item => [item.name, item.category, item.cartons, item.pieces, item.isAvailable ? 'In Stock' : 'Out of Stock']);
-                            doc.autoTable({ 
-                                head: [tableColumn], 
-                                body: tableRows, 
-                                startY: 50, 
-                                styles: { fontSize: 12, fontStyle: 'bold' }, 
-                                headStyles: { fillColor: [220, 39, 39] },
-                                didDrawPage: addWatermark,
-                                didParseCell: function (data) {
-                                    if (data.section === 'body') {
-                                        const isAvailable = data.row.raw[4] === 'In Stock';
-                                        if (!isAvailable) {
-                                            data.cell.styles.textColor = '#9ca3af';
-                                        }
-                                    }
-                                }
-                            });
+                            doc.autoTable({ ...autoTableConfig, head: [tableColumn], body: tableRows, startY });
+                            startY = doc.autoTable.previous.finalY + 10;
+                        });
+                    } else {
+                        const masterList = (productsByCategory[category] || []).filter(p => p !== 'Other');
+                        const inventoryProducts = sortedProducts.filter(p => p.category === category);
+                        const availableNames = new Set(inventoryProducts.map(p => p.productName));
+                        let cutOffProducts = [];
+                        if (category !== 'Frozen') {
+                            const missing = masterList.filter(n => !availableNames.has(n));
+                            cutOffProducts = missing.map(name => ({ productName: name, isCutOff: true }));
                         }
-                        doc.deletePage(1); // Delete the initial blank page
-                        doc.save(`albaik_${reportType}_report.pdf`);
-                    } catch (error) {
-                        console.error("Failed to export PDF:", error);
+                        const allCategoryRows = [...inventoryProducts, ...cutOffProducts];
+                        if (allCategoryRows.length === 0) return;
+
+                        const tableRows = allCategoryRows.map(p => {
+                            if (p.isCutOff) return [p.productName, '', '', '', '', 'Cut Off', '', ''];
+                            const remainingDays = calculateRemainingDays(p.category === 'Frozen' ? p.expireDate : p.albaikExpire);
+                            const productNameWithBatch = `${p.productName} ${usageOrderMap.get(p.id) ? `(${usageOrderMap.get(p.id)})` : ''}`;
+                            return [productNameWithBatch, p.batchNumber || 'N/A', formatDate(p.productionDate), formatDate(p.expireDate), formatDate(p.albaikExpire), p.quantityCarton || 0, p.quantityPiece || 0, remainingDays ?? 'N/A'];
+                        });
+
+                        doc.autoTable({ ...autoTableConfig, head: [tableColumn], body: tableRows, startY });
+                        startY = doc.autoTable.previous.finalY + 15;
                     }
                 });
-            };
-        
+            } else {
+                drawHeader();
+                const tableColumn = ["Product Name", "Category", "Total Cartons", "Total Pieces", "Status"];
+                const tableRows = storeBalanceData.map(item => [item.name, item.category, item.cartons, item.pieces, item.isAvailable ? 'In Stock' : 'Out of Stock']);
+
+                doc.autoTable({
+                    head: [tableColumn],
+                    body: tableRows,
+                    startY: 50,
+                    styles: { fontSize: 12, fontStyle: 'bold', fillColor: [255, 255, 255], textColor: [0, 0, 0] }, // ✅ Black
+                    headStyles: { fillColor: [220, 39, 39], fontStyle: 'bold', textColor: [0, 0, 0] }, // ✅ Black
+                    didDrawPage: addWatermark,
+                    didParseCell: function (data) {
+                        data.cell.styles.textColor = [0, 0, 0]; // ✅ Black
+                    }
+                });
+            }
+
+            doc.deletePage(1);
+            doc.save(`albaik_${reportType}_report.pdf`);
+        } catch (error) {
+            console.error("Failed to export PDF:", error);
+        }
+    });
+};
+
             const handleExportExcel = () => {
                 let wb = XLSX.utils.book_new();
                 let fileName;
@@ -602,7 +630,7 @@
                         'Albaik Shelf Life': formatDate(p.albaikExpire),
                         'Qty (Ctn)': p.quantityCarton || 0,
                         'Qty (Pcs)': p.quantityPiece || 0,
-                        'Days Left': calculateRemainingDays((p.category === 'Frozen' || p.category === 'Drinks') ? p.expireDate : p.albaikExpire) ?? 'N/A'
+                        'Days Left': calculateRemainingDays(p.category === 'Frozen' ? p.expireDate : p.albaikExpire) ?? 'N/A'
                     }));
                     const ws = XLSX.utils.json_to_sheet(data);
                     
